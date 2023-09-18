@@ -14,6 +14,7 @@ def blog_details(request):
 #     hotels = hotel.objects.get(pk=hotel_id)
 #     return render(request, 'details.html', {'Hotel': hotel})
 
-def details(request):
-    return render(request, 'hotel_pages/details.html')
+def details(request, hotel_id):
+    Hotel = get_object_or_404(hotel, pk=hotel_id)
+    return render(request, 'hotel_pages/details.html', {'Hotel': Hotel})
 

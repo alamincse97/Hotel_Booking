@@ -243,9 +243,13 @@
         {% for Hotel in Hotels %}
         <div class="col">
           <div class="card h-100">
-            <img src="{{Hotel.image.url}}" class="card-img-top" alt="...">
+            <a href="{% url 'details' Hotel.id %}">
+              <img src="{{Hotel.image.url}}" class="card-img-top" alt="...">
+            </a>
             <div class="card-body">
-              <h5 class="card-title">{{Hotel.Name}}</h5>
+              <a href="{% url 'details' Hotel.id %}">
+                <h5 class="card-title">{{Hotel.Name}}</h5>
+              </a>
             </div>
           </div>
         </div>
