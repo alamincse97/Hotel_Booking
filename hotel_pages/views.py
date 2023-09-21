@@ -15,23 +15,19 @@ def details(request, hotel_id):
     Hotel = get_object_or_404(hotel, pk=hotel_id)
     return render(request, 'hotel_pages/details.html', {'Hotel': Hotel})
 
-def submit_review(request, hotel_id):
-    url = request.META.get('HTTP_REFERER')
-    if request.method == 'POST':
+def create_review(request, hotel_id):
+    Hotel = get_object_or_404(hotel, pk=hotel_id)
+    if request.method == 'GET':
+        return render(request, 'hotel_pages/review.html', {'forms': ReviewForm(), 'Hotel': Hotel})
+    
+    else:
         try:
-            reviews = ReviewRating.objects.get(user__id=request.user.id)
-            form = ReviewForm(request.POST, instance=reviews)
-            form.save()
-            return redirect(url)
-        except ReviewRating.DoesNotExist:
             form = ReviewForm(request.POST)
-            if form.is_valid():
-                data = ReviewRating()
-                data.subject = form.cleaned_data['subject']
-                data.rating = form.cleaned_data['rating']
-                data.review = form.cleaned_data['review']
-                data.ip = request.META.get('REMOTE_ADDR')
-                data.hotel_id = hotel_id
-                data.user_id = request.user.id
-                data.save()
-                return redirect(url)
+            newReview = form.save(commit=False)
+            newReview.user = request.user
+            newReview.Hotel = Hotel
+            newReview.save()
+            return redirect('details', newReview.Hotel.id)
+        except ValueError:
+            return render(request, 'hotel_pages/review.html', {'form': ReviewForm(), 'Hotel': Hotel, 'error': 'Bad Data Given'})
+    
