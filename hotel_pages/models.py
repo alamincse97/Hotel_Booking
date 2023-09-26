@@ -15,17 +15,26 @@ class hotel(models.Model):
     
     def __str__(self) -> str:
         return self.Name
+       
+# class Review(models.Model):
+#     Hotels = models.ForeignKey(hotel, on_delete=models.CASCADE)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     review = models.TextField(max_length=500, blank=True)
+#     rating = models.FloatField(max_length=5, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
     
-class ReviewRating(models.Model):
-    Hotels = models.ForeignKey(hotel, on_delete=models.CASCADE)
+#     def __str__(self) -> str:
+#         return self.subject    
+
+class Review(models.Model):
+    hotel = models.ForeignKey(hotel, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=300, blank=True)
-    review = models.TextField(max_length=500, blank=True)
-    rating = models.FloatField()
-    ip = models.CharField(max_length=20, blank=True)
-    status = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    rating = models.IntegerField()
+    review = models.TextField()
+ 
+    def __str__(self):
+        return f"Review by {self.user.username} for {self.hotel.Name}"
+
     
-    def __str__(self) -> str:
-        return self.subject    
+    
