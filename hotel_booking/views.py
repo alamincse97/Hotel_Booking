@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from hotel_pages.models import hotel
+from hotel_pages.models import Hotel
 
 def home(request):
     searchItem = request.GET.get('searchItem')
     if searchItem:
-        Hotel = hotel.objects.filter(Address__icontains=searchItem)
+        hotel = Hotel.objects.filter(Address__icontains=searchItem)
     else:
-        Hotel = hotel.objects.all()
-    return render(request, 'index.html', {'searchItem': searchItem, 'Hotels': Hotel})
+        hotel = Hotel.objects.all()
+    return render(request, 'index.html', {'searchItem': searchItem, 'hotels': hotel})

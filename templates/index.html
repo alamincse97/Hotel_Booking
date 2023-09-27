@@ -207,15 +207,15 @@
     <!-- Hero Section End -->
     <div>
       <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for Hotel in Hotels %}
+        {% for hotel in hotels %}
         <div class="col">
           <div class="card h-100">
-            <a href="{% url 'details' Hotel.id %}">
-              <img src="{{Hotel.image.url}}" class="card-img-top" alt="...">
+            <a href="{% url 'details' hotel.id %}">
+              <img src="{{hotel.image.url}}" class="card-img-top" alt="...">
             </a>
             <div class="card-body">
-              <a href="{% url 'details' Hotel.id %}">
-                <h5 class="card-title">{{Hotel.Name}}</h5>
+              <a href="{% url 'details' hotel.id %}">
+                <h5 class="card-title">{{hotel.Name}}</h5>
               </a>
             </div>
           </div>
